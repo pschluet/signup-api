@@ -4,6 +4,7 @@ import { hello } from './src/functions';
 
 const serverlessConfiguration: AWS = {
   service: 'signup-api',
+  configValidationMode: 'error',
   frameworkVersion: '2',
   custom: {
     webpack: {
@@ -14,6 +15,8 @@ const serverlessConfiguration: AWS = {
   plugins: ['serverless-webpack'],
   provider: {
     name: 'aws',
+    stage: "${opt:stage, 'dev'}",
+    region: 'us-east-1',
     runtime: 'nodejs12.x',
     apiGateway: {
       minimumCompressionSize: 1024,
