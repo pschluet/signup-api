@@ -18,7 +18,7 @@ const serverlessConfiguration: AWS = {
     stage: "${opt:stage, 'dev'}",
     region: 'us-east-1',
     apiKeys: [
-      "${self:provider.stage}-{self:service}"
+      "${self:provider.stage}-${self:service}"
     ],
     runtime: 'nodejs12.x',
     apiGateway: {
