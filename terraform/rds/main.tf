@@ -13,6 +13,16 @@ terraform {
   }
 }
 
+variable "DB_USERNAME" {
+  # Environment variable set in the GitHub actions pipeline
+  type = string
+}
+
+variable "DB_PASSWORD" {
+  # Environment variable set in the GitHub actions pipeline
+  type = string
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -32,11 +42,11 @@ resource "aws_db_instance" "prod" {
   instance_class          = "db.t2.micro"
   multi_az                = false
   name                    = "prod-main"
-  password                = TODO: GitHub secrets.DB_PASSWORD
+  password                = var.DB_PASSWORD
   port                    = 5432
   publicly_accessible     = true
   storage_encrypted       = true # you should always do this
   storage_type            = "gp2"
-  username                = TODO: GitHub secrets.DB_USERNAME
+  username                = var.DB_USERNAME
   vpc_security_group_ids  = ["sg-0255e56b16aeefad8"]
 }
