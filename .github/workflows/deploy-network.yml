@@ -7,7 +7,6 @@ on:
       - main
     paths:
       - terraform/network/**
-      - .github/workflows/deploy-network.yml
 
 jobs:
   terraform-actions:

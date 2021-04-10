@@ -7,7 +7,6 @@ on:
       - main
     paths-ignore:
       - terraform/**
-      - .github/workflows/deploy-network.yml
 
 jobs:
   deploy:
