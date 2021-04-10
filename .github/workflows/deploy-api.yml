@@ -1,9 +1,11 @@
-name: Deploy main branch
+name: Deploy API
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - terraform/**
 
 jobs:
   deploy:
