@@ -32,6 +32,20 @@ resource "aws_db_subnet_group" "rds" {
   subnet_ids = ["subnet-03a512caca489d92e"]
 }
 
+resource "aws_ssm_parameter" "db_password" {
+  name        = "db_password"
+  description = "Database password"
+  type        = "SecureString"
+  value       = var.DB_PASSWORD
+}
+
+resource "aws_ssm_parameter" "db_username" {
+  name        = "db_username"
+  description = "Database username"
+  type        = "SecureString"
+  value       = var.DB_USERNAME
+}
+
 resource "aws_db_instance" "prod" {
   allocated_storage       = 20 # gigabytes
   backup_retention_period = 5  # in days
