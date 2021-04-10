@@ -59,7 +59,7 @@ resource "aws_db_instance" "prod" {
   password                = var.DB_PASSWORD
   port                    = 5432
   publicly_accessible     = true
-  storage_encrypted       = true # you should always do this
+  storage_encrypted       = false # this should be true in production
   storage_type            = "gp2"
   username                = var.DB_USERNAME
   vpc_security_group_ids  = ["sg-0255e56b16aeefad8"]
