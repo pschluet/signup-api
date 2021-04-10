@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - terraform/network/**
+      - .github/workflows/deploy-network.yml
 
 jobs:
   terraform-actions:
@@ -53,6 +54,6 @@ jobs:
       continue-on-error: false
 
     - name: Terraform Apply
-      id: apply -auto-approve
-      run: terraform apply -no-color
+      id: apply
+      run: terraform apply -auto-approve -no-color
       continue-on-error: false
