@@ -29,7 +29,7 @@ provider "aws" {
 
 resource "aws_db_subnet_group" "rds" {
   name       = "rds-subnet-group"
-  subnet_ids = ["subnet-03a512caca489d92e"]
+  subnet_ids = ["subnet-03a512caca489d92e", "subnet-0fc5a8422e7b6977f"]
 }
 
 resource "aws_ssm_parameter" "db_password" {
