@@ -55,7 +55,7 @@ resource "aws_db_instance" "prod" {
   identifier              = "prod"
   instance_class          = "db.t2.micro"
   multi_az                = false
-  name                    = "prod-main"
+  name                    = "prod"
   password                = var.DB_PASSWORD
   port                    = 5432
   publicly_accessible     = true
