@@ -16,7 +16,7 @@ jobs:
       run:
         working-directory: terraform/rds
     env:
-      TF_VAR_DB_USER: ${{ secrets.DB_USERNAME }}
+      TF_VAR_DB_USERNAME: ${{ secrets.DB_USERNAME }}
       TF_VAR_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     steps:
 
