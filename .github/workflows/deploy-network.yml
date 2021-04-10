@@ -53,6 +53,6 @@ jobs:
       continue-on-error: false
 
     - name: Terraform Apply
-      id: apply
+      id: apply -auto-approve
       run: terraform apply -no-color
       continue-on-error: false
