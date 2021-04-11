@@ -24,8 +24,8 @@ jobs:
           node-version: 14.x
       - run: npm ci
       - name: Run Prisma Migrations
+        working-directory: prisma
         run: npx prisma migrate deploy
-          working-directory: prisma
       - name: serverless deploy
         uses: serverless/github-action@v2.17.1
         with:
