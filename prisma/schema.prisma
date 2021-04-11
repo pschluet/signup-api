@@ -8,14 +8,17 @@ generator client {
 }
 
 model SignupItem {
-  id             Int         @id @default(autoincrement())
-  date           DateTime
-  title          String
-  description    String?
-  link           String
-  eligibleGroups UserGroup[]
-  assignedUser   User?       @relation(fields: [userId], references: [id])
-  userId         Int?
+  id              Int         @id @default(autoincrement())
+  date            DateTime
+  title           String
+  description     String?
+  link            String
+  eligibleGroups  UserGroup[]
+  assignee        User?       @relation(name: "assignee", fields: [assigneeUserId], references: [id])
+  assigneeUserId  Int?
+  createdBy       User        @relation(name: "createdBy", fields: [createdByUserId], references: [id])
+  createdByUserId Int
+  createdOn       DateTime
 }
 
 model UserGroup {
@@ -26,10 +29,11 @@ model UserGroup {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  email       String
-  groups      UserGroup[]
-  signupItems SignupItem[]
+  id                  Int          @id @default(autoincrement())
+  firstName           String
+  lastName            String
+  email               String
+  groups              UserGroup[]
+  assignedSignupItems SignupItem[] @relation(name: "assignee")
+  createdSignupItems  SignupItem[] @relation(name: "createdBy")
 }
