@@ -12,6 +12,8 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout code
@@ -20,6 +22,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+      - run: npm ci
+      - name: Run Prisma Migrations
+        working-directory: prisma
+        run: npx prisma migrate deploy
       - name: serverless deploy
         uses: serverless/github-action@v2.17.1
         with:

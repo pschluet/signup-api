@@ -1,0 +1,35 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model SignupItem {
+  id             Int         @id @default(autoincrement())
+  date           DateTime
+  title          String
+  description    String?
+  link           String
+  eligibleGroups UserGroup[]
+  assignedUser   User?       @relation(fields: [userId], references: [id])
+  userId         Int?
+}
+
+model UserGroup {
+  id          Int          @id @default(autoincrement())
+  name        String
+  users       User[]
+  signupItems SignupItem[]
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String
+  groups      UserGroup[]
+  signupItems SignupItem[]
+}
