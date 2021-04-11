@@ -18,7 +18,7 @@ model SignupItem {
   assigneeUserId  Int?
   createdBy       User        @relation(name: "createdBy", fields: [createdByUserId], references: [id])
   createdByUserId Int
-  createdOn       DateTime
+  createdAt       DateTime    @default(now())
 }
 
 model UserGroup {
