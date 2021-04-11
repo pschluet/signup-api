@@ -9,6 +9,7 @@
   "dependencies": {
     "@middy/core": "^1.5.0",
     "@middy/http-json-body-parser": "^1.5.0",
+    "@prisma/client": "^2.20.1",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
     "@types/node": "^14.14.6",
     "fork-ts-checker-webpack-plugin": "^6.0.0",
     "json-schema-to-ts": "^1.4.1",
+    "prisma": "^2.20.1",
     "serverless": "^2.16.0",
     "serverless-webpack": "^5.2.0",
     "ts-loader": "^8.0.10",
