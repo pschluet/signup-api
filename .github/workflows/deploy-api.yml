@@ -26,11 +26,3 @@ jobs:
       - name: Run Prisma Migrations
         working-directory: prisma
         run: npx prisma migrate deploy
-      - name: serverless deploy
-        uses: serverless/github-action@v2.17.1
-        with:
-          args: -c "npm install --also=dev && serverless deploy --stage=prod"
-          entrypoint: /bin/bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
