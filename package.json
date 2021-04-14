@@ -4,7 +4,8 @@
   "description": "An API for a sign-up app",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node src/server.ts"
+    "start": "ts-node-dev --no-notify --transpile-only --respawn ./src/server.ts",
+    "start-prod": "npx tsc && node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,7 @@
     "@types/graphql-fields": "^1.3.3",
     "@types/node": "^14.14.37",
     "prisma": "~2.20.1",
-    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
     "typegraphql-prisma": "^0.13.0",
     "typescript": "^4.2.4"
   },
