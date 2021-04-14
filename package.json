@@ -4,7 +4,7 @@
   "description": "An API for a sign-up app",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node src/server.ts"
+    "start": "ts-node src/server.ts"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.9.0",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^9.1.1",
     "type-graphql": "^1.1.1"
   }
 }

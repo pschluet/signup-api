@@ -1,21 +1,24 @@
-require('reflect-metadata');
+import { PrismaClient } from '@prisma/client';
+import 'reflect-metadata';
+import { resolvers } from '@generated/type-graphql';
+import { buildSchema } from  'type-graphql';
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+import { ApolloServer, gql } from 'apollo-server-express';
+import { Context } from 'node:vm';
+
+const prisma = new PrismaClient();
 
 async function startServer() {
-  const typeDefs = gql`
-    type Query {
-      hello: String
-    }
-  `;
+  const schema = await buildSchema({
+    resolvers,
+    validate: false
+  });
 
-  const resolvers = {
-    Query: {
-      hello: () => 'Hello',
-    }
-  };
-
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({ 
+    schema,
+    playground: true,
+    context: (): Context => ({ prisma })
+  });
   await server.start();
 
   const app = express();
