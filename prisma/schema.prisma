@@ -27,7 +27,7 @@ model SignupItem {
 
 model UserGroup {
   id          Int          @id @default(autoincrement())
-  name        String
+  name        String       @unique
   users       User[]
   signupItems SignupItem[]
 }
