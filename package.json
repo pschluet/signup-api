@@ -5,7 +5,9 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "ts-node-dev --no-notify --transpile-only --respawn ./src/server.ts",
-    "start-prod": "npx tsc && node dist/server.js"
+    "build": "npx prisma generate && npx tsc",
+    "start-prod": "node dist/server.js",
+    "deploy": "./scripts/deploy.sh"
   },
   "repository": {
     "type": "git",
