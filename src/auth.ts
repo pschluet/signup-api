@@ -24,9 +24,9 @@ export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
   return await verifier.verify(tokenParts[1]);
 };
 
-export const isUserAuthorized: AuthChecker<UserContext> = async (
+export const isUserAuthorized: AuthChecker<UserContext,Role> = async (
   { root, args, context, info },
-  requiredRoles: string[]
+  requiredRoles
 ) => {
   return await isCognitoTokenValid(context.req) &&
     requiredRoles.every(requiredRole => 
@@ -38,7 +38,8 @@ export const getUserInfo = (authHeader: string): UserInfo => {
   try {
     const decodedToken: any = jwt_decode(authHeader);
     return {
-      roles: 'cognito:groups' in decodedToken ? decodedToken['cognito:groups'] : [],
+      roles: 'cognito:groups' in decodedToken ? 
+        decodedToken['cognito:groups'].map(parseRole).filter((x: any) => !!x) : [],
       id: 'id' in decodedToken ? decodedToken['id'] : '',
     }
   }
@@ -48,7 +49,10 @@ export const getUserInfo = (authHeader: string): UserInfo => {
       id: ''
     };
   }
-  
+}
+
+const parseRole = (input: string): Role => {
+  return Role[input as keyof typeof Role];
 }
 
 export const resolversEnhanceMap: ResolversEnhanceMap = {
