@@ -34,13 +34,21 @@ export const isUserAuthorized: AuthChecker<UserContext> = async (
     );
 }
 
-export const getUserInfo = (authHeader: string): UserInfo => {
-  const decodedToken: any = jwt_decode(authHeader);
-
-  return {
-    roles: 'cognito:groups' in decodedToken ? decodedToken['cognito:groups'] : [],
-    id: 'id' in decodedToken ? decodedToken['id'] : null,
+export const getUserInfo = (authHeader: string): UserInfo => {  
+  try {
+    const decodedToken: any = jwt_decode(authHeader);
+    return {
+      roles: 'cognito:groups' in decodedToken ? decodedToken['cognito:groups'] : [],
+      id: 'id' in decodedToken ? decodedToken['id'] : '',
+    }
   }
+  catch (e) {
+    return {
+      roles: [],
+      id: ''
+    };
+  }
+  
 }
 
 export const resolversEnhanceMap: ResolversEnhanceMap = {
