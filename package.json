@@ -9,7 +9,8 @@
     "start-prod": "node dist/server.js",
     "deploy": "./scripts/deploy.sh",
     "migrations": "npx prisma migrate deploy",
-    "reset-db": "npx prisma migrate reset"
+    "reset-db": "npx prisma migrate reset",
+    "prisma-generate": "npx prisma generate"
   },
   "repository": {
     "type": "git",
@@ -34,10 +35,10 @@
     "@prisma/client": "~2.20.1",
     "apollo-server-express": "^2.22.2",
     "class-validator": "^0.13.1",
-    "express-bearer-token": "^2.4.0",
     "graphql": "^15.5.0",
     "graphql-fields": "^2.0.3",
     "graphql-scalars": "^1.9.0",
+    "jwt-decode": "^3.1.2",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.1.1",
     "verify-cognito-token": "^1.2.4"

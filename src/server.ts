@@ -12,10 +12,10 @@ import { Authorized, buildSchema } from  'type-graphql';
 const express = require('express');
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import { Context } from 'node:vm';
-import { isUserAuthorized, resolversEnhanceMap } from './auth';
-import bearerToken from 'express-bearer-token';
+import { getUserInfo, isUserAuthorized, resolversEnhanceMap } from './auth';
 import { Role } from './model/enum/role';
 import { UserContext } from './model/user-context';
+import jwt_decode from 'jwt-decode';
 
 const prisma = new PrismaClient();
 
@@ -36,13 +36,15 @@ async function startServer() {
 
   const server = new ApolloServer({ 
     schema,
-    context: ({ req, res }: ExpressContext): UserContext => ({ prisma, req, res })
+    context: ({ req, res }: ExpressContext): UserContext => {
+      const authHeader = req.headers.authorization || '';
+      const user = getUserInfo(authHeader);
+      return { prisma, req, res, user }
+    }
   });
   await server.start();
 
   const app = express();
-  
-  app.use(server.graphqlPath, bearerToken());
   
   server.applyMiddleware({ app });
   await new Promise(resolve => app.listen({ port: 4000 }, resolve));
