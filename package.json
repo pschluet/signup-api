@@ -7,7 +7,9 @@
     "start": "ts-node-dev --no-notify --transpile-only --respawn ./src/server.ts",
     "build": "npx prisma generate && npx tsc",
     "start-prod": "node dist/server.js",
-    "deploy": "./scripts/deploy.sh"
+    "deploy": "./scripts/deploy.sh",
+    "migrations": "npx prisma migrate deploy",
+    "reset-db": "npx prisma migrate reset"
   },
   "repository": {
     "type": "git",

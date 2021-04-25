@@ -1,10 +1,16 @@
 import  Verifier from 'verify-cognito-token';
 import { Request, Response, NextFunction } from 'express';
+import { AuthChecker, Authorized } from 'type-graphql';
+import { PrismaClient } from '@prisma/client';
+import { UserContext } from './model/user-context';
+import { 
+  ResolversEnhanceMap,
+} from '@generated/type-graphql';
+import { Role } from './model/enum/role';
 
-export const validateCognitoToken = async (req: Request, res: Response, next: NextFunction) => {
+export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
   if (!req.token) {
-    res.sendStatus(401);
-    return;
+    return false;
   }
 
   const verifier = new Verifier({
@@ -12,9 +18,22 @@ export const validateCognitoToken = async (req: Request, res: Response, next: Ne
     userPoolId: 'us-east-1_hJrsBJIE5',
   });
 
-  if (await verifier.verify(req.token)) {
-    next();
-  } else {
-    res.sendStatus(401);
-  }
+  return await verifier.verify(req.token);
 };
+
+export const isUserAuthorized: AuthChecker<UserContext> = async (
+  { root, args, context, info },
+  requiredRoles: string[]
+) => {
+  // TODO: check roles
+  return await isCognitoTokenValid(context.req);
+}
+
+export const resolversEnhanceMap: ResolversEnhanceMap = {
+  User: {
+    createUser: [Authorized(Role.Admin)],
+    deleteUser: [Authorized(Role.Admin)],
+    user: [Authorized()],
+    users: [Authorized()],
+  },
+}
