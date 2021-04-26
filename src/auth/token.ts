@@ -11,7 +11,7 @@ export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
     return false;
   }
   const tokenParts = req.headers.authorization.split('Bearer ');
-  if (tokenParts.length != 2) { return false; }
+  if (tokenParts.length !== 2) { return false; }
 
   const verifier = new Verifier({
     region: 'us-east-1',
