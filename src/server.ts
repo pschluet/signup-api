@@ -8,14 +8,12 @@ import {
   UserRelationsResolver,
   applyResolversEnhanceMap,
 } from '@generated/type-graphql';
-import { Authorized, buildSchema } from  'type-graphql';
+import { buildSchema } from  'type-graphql';
 const express = require('express');
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
-import { Context } from 'node:vm';
-import { getUserInfo, isUserAuthorized, resolversEnhanceMap } from './auth';
-import { Role } from './model/enum/role';
+import { getUserInfo, isUserAuthorized } from './auth/token';
 import { UserContext } from './model/user-context';
-import jwt_decode from 'jwt-decode';
+import { resolversEnhanceMap } from './auth/resolvers-enhance-map';
 
 const prisma = new PrismaClient();
 

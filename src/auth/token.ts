@@ -1,13 +1,9 @@
 import  Verifier from 'verify-cognito-token';
 import { Request, Response, NextFunction } from 'express';
 import { AuthChecker, Authorized } from 'type-graphql';
-import { PrismaClient } from '@prisma/client';
-import { UserContext } from './model/user-context';
-import { 
-  ResolversEnhanceMap,
-} from '@generated/type-graphql';
-import { Role } from './model/enum/role';
-import { UserInfo } from './model/user-info';
+import { UserContext } from '../model/user-context';
+import { Role } from '../model/enum/role';
+import { UserInfo } from '../model/user-info';
 import jwt_decode from 'jwt-decode';
 
 export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
@@ -55,11 +51,3 @@ const parseRole = (input: string): Role => {
   return Role[input as keyof typeof Role];
 }
 
-export const resolversEnhanceMap: ResolversEnhanceMap = {
-  User: {
-    createUser: [Authorized(Role.Admin)],
-    deleteUser: [Authorized(Role.Admin)],
-    user: [Authorized()],
-    users: [Authorized()],
-  },
-}
