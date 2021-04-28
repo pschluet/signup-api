@@ -12,16 +12,9 @@ export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
   }
   const tokenParts = req.headers.authorization.split('Bearer ')
   if (tokenParts.length !== 2) {
-    return false
+    return false;
   }
 
-
-
-
-
-
-
-  
   const verifier = new Verifier({
     region: 'us-east-1',
     userPoolId: 'us-east-1_hJrsBJIE5',
