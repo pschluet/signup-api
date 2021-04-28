@@ -17,6 +17,10 @@ export const isCognitoTokenValid = async (req: Request): Promise<boolean> => {
 
 
 
+
+
+
+
   
   const verifier = new Verifier({
     region: 'us-east-1',
