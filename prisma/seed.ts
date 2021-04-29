@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
 
 async function main() {
-  const chantersGroupName = 'chanters';
-  const readersGroupName = 'readers';
+  const chantersGroupName = 'chanters'
+  const readersGroupName = 'readers'
 
   const adminChanterUser = await prisma.user.upsert({
     where: { email: 'bill@example.com' },
@@ -16,12 +16,12 @@ async function main() {
         connectOrCreate: [
           {
             where: { name: chantersGroupName },
-            create: { name: chantersGroupName},
+            create: { name: chantersGroupName }
           }
         ]
       }
     }
-  });
+  })
 
   const readerUser = await prisma.user.upsert({
     where: { email: 'foo@bar.com' },
@@ -34,15 +34,15 @@ async function main() {
         connectOrCreate: [
           {
             where: { name: readersGroupName },
-            create: { name: readersGroupName},
+            create: { name: readersGroupName }
           }
         ]
       }
     }
-  });
+  })
 
-  const date = new Date();
-  date.setDate(date.getDate() + 7);
+  const date = new Date()
+  date.setDate(date.getDate() + 7)
 
   const signupItem1 = await prisma.signupItem.create({
     data: {
@@ -54,7 +54,7 @@ async function main() {
         connectOrCreate: [
           {
             where: { name: chantersGroupName },
-            create: { name: chantersGroupName},
+            create: { name: chantersGroupName }
           }
         ]
       },
@@ -63,9 +63,9 @@ async function main() {
       },
       createdBy: {
         connect: { id: adminChanterUser.id }
-      },
+      }
     }
-  });
+  })
 
   const signupItem2 = await prisma.signupItem.create({
     data: {
@@ -77,7 +77,7 @@ async function main() {
         connectOrCreate: [
           {
             where: { name: readersGroupName },
-            create: { name: readersGroupName},
+            create: { name: readersGroupName }
           }
         ]
       },
@@ -86,17 +86,16 @@ async function main() {
       },
       createdBy: {
         connect: { id: readerUser.id }
-      },
+      }
     }
-  });
-
+  })
 }
 
 main()
-  .catch(e => {
-    console.error(e);
-    process.exit(1);
+  .catch((e) => {
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })
