@@ -3,18 +3,13 @@ name: Deploy API
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
     paths-ignore:
       - terraform/**
 
 jobs:
-  deploy:
-    name: deploy
+  check:
+    name: check
     runs-on: ubuntu-latest
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,6 +18,19 @@ jobs:
         with:
           node-version: 14.x
       - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Format Check
+        run: npm run format-check
+  deploy:
+    if: github.ref == 'refs/heads/main' # Only deploy on main branch
+    needs: check
+    name: deploy
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
       - name: Run Prisma Migrations
         working-directory: prisma
         run: npx prisma migrate deploy

@@ -1,8 +1,6 @@
-import { Authorized } from "type-graphql";
-import { 
-  ResolversEnhanceMap,
-} from '@generated/type-graphql';
-import { Role } from "../model/enum/role";
+import { Authorized } from 'type-graphql';
+import { ResolversEnhanceMap } from '@generated/type-graphql';
+import { Role } from '../model/enum/role';
 
 // Authorization guards for resolvers
 export const resolversEnhanceMap: ResolversEnhanceMap = {
@@ -12,4 +10,4 @@ export const resolversEnhanceMap: ResolversEnhanceMap = {
     user: [Authorized()],
     users: [Authorized()],
   },
-}
+};

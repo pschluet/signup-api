@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import 'reflect-metadata';
-import { 
+import {
   CreateUserResolver,
   FindManyUserResolver,
   FindUniqueUserResolver,
@@ -8,12 +8,12 @@ import {
   UserRelationsResolver,
   applyResolversEnhanceMap,
 } from '@generated/type-graphql';
-import { buildSchema } from  'type-graphql';
-const express = require('express');
+import { buildSchema } from 'type-graphql';
 import { ApolloServer, ExpressContext } from 'apollo-server-express';
 import { getUserInfo, isUserAuthorized } from './auth/token';
 import { UserContext } from './model/user-context';
 import { resolversEnhanceMap } from './auth/resolvers-enhance-map';
+const express = require('express');
 
 const prisma = new PrismaClient();
 
@@ -32,20 +32,20 @@ async function startServer() {
     authChecker: isUserAuthorized,
   });
 
-  const server = new ApolloServer({ 
+  const server = new ApolloServer({
     schema,
     context: ({ req, res }: ExpressContext): UserContext => {
       const authHeader = req.headers.authorization || '';
       const user = getUserInfo(authHeader);
-      return { prisma, req, res, user }
-    }
+      return { prisma, req, res, user };
+    },
   });
   await server.start();
 
   const app = express();
-  
+
   server.applyMiddleware({ app });
-  await new Promise(resolve => app.listen({ port: 4000 }, resolve));
+  await new Promise((resolve) => app.listen({ port: 4000 }, resolve));
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
   return { server, app };
 }
