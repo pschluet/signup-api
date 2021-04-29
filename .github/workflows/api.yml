@@ -31,6 +31,13 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - run: npm ci
       - name: Run Prisma Migrations
         working-directory: prisma
         run: npx prisma migrate deploy
